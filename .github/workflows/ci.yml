@@ -87,6 +87,10 @@ jobs:
           echo "DEP_DIR_FLAGS=$DEP_DIR_FLAGS" >> "$GITHUB_ENV"
           # Test scripts of some projects invoke installed dep binaries
           echo "$DEPS_PREFIX/bin" >> "$GITHUB_PATH"
+          # ... and some load perl modules installed by mni-perllib
+          if [ -d "$DEPS_PREFIX/perl" ]; then
+            echo "PERL5LIB=$DEPS_PREFIX/perl:${PERL5LIB:-}" >> "$GITHUB_ENV"
+          fi
       - name: Configure + build
         run: |
           set -euxo pipefail
@@ -95,7 +99,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX="$PWD/install" \
+            -DCMAKE_INSTALL_PREFIX="${RUNNER_TEMP:-/tmp}/ci-install" \
             -DCMAKE_PREFIX_PATH="$DEPS_PREFIX" \
             -DBUILD_TESTING=OFF \
             $DEP_DIR_FLAGS
@@ -162,6 +166,10 @@ jobs:
           echo "DEP_DIR_FLAGS=$DEP_DIR_FLAGS" >> "$GITHUB_ENV"
           # Test scripts of some projects invoke installed dep binaries
           echo "$DEPS_PREFIX/bin" >> "$GITHUB_PATH"
+          # ... and some load perl modules installed by mni-perllib
+          if [ -d "$DEPS_PREFIX/perl" ]; then
+            echo "PERL5LIB=$DEPS_PREFIX/perl:${PERL5LIB:-}" >> "$GITHUB_ENV"
+          fi
       - name: Configure + build
         run: |
           set -euxo pipefail
@@ -170,7 +178,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX="$PWD/install" \
+            -DCMAKE_INSTALL_PREFIX="${RUNNER_TEMP:-/tmp}/ci-install" \
             -DCMAKE_PREFIX_PATH="$DEPS_PREFIX" \
             -DBUILD_TESTING=OFF \
             $DEP_DIR_FLAGS
@@ -230,6 +238,10 @@ jobs:
           echo "DEP_DIR_FLAGS=$DEP_DIR_FLAGS" >> "$GITHUB_ENV"
           # Test scripts of some projects invoke installed dep binaries
           echo "$DEPS_PREFIX/bin" >> "$GITHUB_PATH"
+          # ... and some load perl modules installed by mni-perllib
+          if [ -d "$DEPS_PREFIX/perl" ]; then
+            echo "PERL5LIB=$DEPS_PREFIX/perl:${PERL5LIB:-}" >> "$GITHUB_ENV"
+          fi
       - name: Configure + build
         run: |
           set -euxo pipefail
@@ -238,7 +250,7 @@ jobs:
             -DCMAKE_C_COMPILER_LAUNCHER=ccache \
             -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX="$PWD/install" \
+            -DCMAKE_INSTALL_PREFIX="${RUNNER_TEMP:-/tmp}/ci-install" \
             -DCMAKE_PREFIX_PATH="$DEPS_PREFIX" \
             -DBUILD_TESTING=OFF \
             $DEP_DIR_FLAGS

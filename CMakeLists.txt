@@ -24,8 +24,11 @@ IF(NOT MINC_TOOLKIT_BUILD)
   FIND_PACKAGE( BICGL REQUIRED )
   FIND_PACKAGE( Perl REQUIRED )
   FIND_PACKAGE( Threads )
-  FIND_PACKAGE( GL REQUIRED )
-  FIND_PACKAGE( GLU REQUIRED )
+  # FindGL.cmake / FindGLU.cmake do not exist (neither here nor in the
+  # minc-toolkit superbuild, which skips this block entirely), so a standalone
+  # configure failed with 'Could not find a package configuration file provided
+  # by "GL"'. FindOpenGL is the standard module and covers GL and GLU.
+  FIND_PACKAGE( OpenGL REQUIRED )
   FIND_PACKAGE( GLUT REQUIRED )
 ENDIF(NOT MINC_TOOLKIT_BUILD)
 
